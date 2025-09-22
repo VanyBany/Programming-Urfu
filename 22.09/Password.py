@@ -12,5 +12,11 @@ def pd():
 
     return password
 
-print(pd())
+list_password = list(pd())
+shuffle(list_password)
+
+list_password = "".join(list_password)
+print(list_password)
+
+
 
