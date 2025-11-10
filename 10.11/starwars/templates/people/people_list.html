@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Персонажи Звёздных Войн</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c2e 0%, #1a1a3e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            border-bottom: 2px solid #ffd700;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .characters-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .character-link {
+            display: block;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .character-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #ff6b00, #ffd700);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .character-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .character-link:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .character-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .character-name i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .character-title {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        
+        .character-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
+            margin-bottom: 8px;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 3px;
+        }
+        
+        .info-value {
+            font-size: 0.9rem;
+            color: #fff;
+        }
+        
+        .character-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .character-id {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .affiliation {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .characters-list {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .characters-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ПЕРСОНАЖИ ЗВЁЗДНЫХ ВОЙН</h1>
+            <div class="subtitle">Галерея ключевых персонажей вселенной</div>
+        </header>
+        
+        <div class="characters-list">
+            <a href="#luke" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-jedi"></i>
+                    Люк Скайуокер
+                </div>
+                <div class="character-title">Джедай, Пилот Альянса Повстанцев</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Татуин</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Gender</div>
+                        <div class="info-value">{{gender}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">{{height}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">{{mess}}</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-001</div>
+                    <div class="affiliation">Джедай</div>
+                </div>
+            </a>
+            
+            <a href="#leia" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-crown"></i>
+                    Лея Органа
+                </div>
+                <div class="character-title">Принцесса, Лидер Альянса Повстанцев</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Алдераан</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Человек</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">150 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">49 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-002</div>
+                    <div class="affiliation">Повстанцы</div>
+                </div>
+            </a>
+            
+            <a href="#han" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-user"></i>
+                    Хан Соло
+                </div>
+                <div class="character-title">Контрабандист, Генерал Альянса</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Кореллия</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Человек</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">180 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">80 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-003</div>
+                    <div class="affiliation">Повстанцы</div>
+                </div>
+            </a>
+            
+            <a href="#vader" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-helmet-battle"></i>
+                    Дарт Вейдер
+                </div>
+                <div class="character-title">Верховный Командующий Имперского Флота</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Татуин</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Человек</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">202 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">136 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-004</div>
+                    <div class="affiliation">Ситх</div>
+                </div>
+            </a>
+            
+            <a href="#obiwan" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-jedi"></i>
+                    Оби-Ван Кеноби
+                </div>
+                <div class="character-title">Мастер-Джедай, Хранитель мира</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Стеджин</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Человек</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">182 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">77 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-005</div>
+                    <div class="affiliation">Джедай</div>
+                </div>
+            </a>
+            
+            <a href="#yoda" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-jedi"></i>
+                    Йода
+                </div>
+                <div class="character-title">Великий Мастер Ордена Джедаев</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Неизвестно</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Йода'с вид</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">66 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">17 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-006</div>
+                    <div class="affiliation">Джедай</div>
+                </div>
+            </a>
+            
+            <a href="#palpatine" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-empire"></i>
+                    Император Палпатин
+                </div>
+                <div class="character-title">Верховный Канцлер, Император Галактики</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Набу</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Человек</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">170 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">75 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-007</div>
+                    <div class="affiliation">Ситх</div>
+                </div>
+            </a>
+            
+            <a href="#chewbacca" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-paw"></i>
+                    Чубакка
+                </div>
+                <div class="character-title">Первый помощник, механик</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Кашиик</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Вуки</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">228 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">112 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-008</div>
+                    <div class="affiliation">Повстанцы</div>
+                </div>
+            </a>
+            
+            <a href="#r2d2" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-robot"></i>
+                    R2-D2
+                </div>
+                <div class="character-title">Астромеханический дроид</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Набу</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Дроид</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">96 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">32 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-009</div>
+                    <div class="affiliation">Повстанцы</div>
+                </div>
+            </a>
+            
+            <a href="#c3po" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-robot"></i>
+                    C-3PO
+                </div>
+                <div class="character-title">Протокольный дроид</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Татуин</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Дроид</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">167 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">75 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-010</div>
+                    <div class="affiliation">Повстанцы</div>
+                </div>
+            </a>
+            
+            <a href="#boba" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-mask"></i>
+                    Боба Фетт
+                </div>
+                <div class="character-title">Охотник за головами</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Камино</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Человек</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">183 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">78 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-011</div>
+                    <div class="affiliation">Империя</div>
+                </div>
+            </a>
+            
+            <a href="#rey" class="character-link">
+                <div class="character-name">
+                    <i class="fas fa-jedi"></i>
+                    Рей
+                </div>
+                <div class="character-title">Мусорщик, Джедай</div>
+                <div class="character-info">
+                    <div class="info-item">
+                        <div class="info-label">Родной мир</div>
+                        <div class="info-value">Джаку</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Раса</div>
+                        <div class="info-value">Человек</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рост</div>
+                        <div class="info-value">170 см</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Вес</div>
+                        <div class="info-value">54 кг</div>
+                    </div>
+                </div>
+                <div class="character-footer">
+                    <div class="character-id">ID: SW-012</div>
+                    <div class="affiliation">Джедай</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

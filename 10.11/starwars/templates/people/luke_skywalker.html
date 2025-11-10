@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }} — Звёздные Войны</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000 url("data:image/svg+xml,%3Csvg viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E.stars %7B fill: %23fff; %7D%3C/style%3E%3Ccircle class='stars' cx='100' cy='80' r='1'/%3E%3Ccircle class='stars' cx='250' cy='150' r='0.6'/%3E%3Ccircle class='stars' cx='400' cy='90' r='0.9'/%3E%3Ccircle class='stars' cx='600' cy='200' r='0.7'/%3E%3Ccircle class='stars' cx='700' cy='100' r='1.1'/%3E%3Ccircle class='stars' cx='200' cy='300' r='0.8'/%3E%3Ccircle class='stars' cx='500' cy='400' r='1'/%3E%3Ccircle class='stars' cx='150' cy='500' r='0.7'/%3E%3C/svg%3E") repeat;
+            color: #ffd700;
+            font-family: 'Orbitron', monospace;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: rgba(10, 10, 20, 0.88);
+            border: 2px solid #b8860b;
+            width: 92%;
+            max-width: 750px;
+            padding: 30px;
+            box-shadow: 0 0 25px rgba(184, 134, 11, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.9);
+            position: relative;
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, #ffd700, #daa520, #ffd700, transparent);
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 0 0 25px;
+            color: #ffd700;
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #daa520;
+            margin: 20px 0 12px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #555;
+            letter-spacing: 2px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            background: rgba(30, 30, 50, 0.5);
+            margin: 10px 0;
+            padding: 12px 20px;
+            border-left: 3px solid #ffd700;
+            font-size: 1.05rem;
+            transition: all 0.25s ease;
+        }
+
+        li:hover {
+            background: rgba(40, 40, 70, 0.7);
+            border-left: 3px solid #ffcc00;
+            transform: translateX(3px);
+        }
+
+        li::before {
+            content: "» ";
+            color: #b8860b;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.9rem; letter-spacing: 2px; }
+            .section-title { font-size: 1.15rem; }
+            li { font-size: 0.95rem; padding: 10px 15px; }
+            .card { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 class="card-title"> {{ name }}</h1>
+
+        <div class="section">
+            <h2 class="section-title">ОСНОВНАЯ ИНФОРМАЦИЯ</h2>
+            <ul>
+                <li>Рост: {{ height }} см</li>
+                <li>Масса: {{ mass }} кг</li>
+                <li>Пол: {{ gender }}</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">ВНЕШНОСТЬ</h2>
+            <ul>
+                <li>Цвет волос: {{ hair_color }}</li>
+                <li>Цвет кожи: {{ skin_color }}</li>
+                <li>Цвет глаз: {{ eye_color }}</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">ПРОИСХОЖДЕНИЕ</h2>
+            <ul>
+                <li>Год рождения: {{ birth_year }}</li>
+            </ul>
+        </div>
+
+        {% if films %}
+            <div class="section">
+                <h2 class="section-title">ФИЛЬМЫ</h2>
+                <ul>
+                    {% for film in films %}
+                        <li>{{ film }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
