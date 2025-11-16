@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звёздный Флот - База данных кораблей</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a2a, #1a1a4a, #2a2a6a);
+            color: #ffd700;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .star-wars-header {
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 3px solid #ffd700;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .star-wars-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+            animation: scanner 3s linear infinite;
+        }
+        
+        @keyframes scanner {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px #ffd700, 0 0 20px #ff6b00;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #87ceeb;
+            letter-spacing: 2px;
+        }
+        
+        .starship-card {
+            background: rgba(0, 0, 30, 0.9);
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            height: 100%;
+        }
+        
+        .starship-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+            border-color: #ff6b00;
+        }
+        
+        .card-title {
+            color: #ffd700;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-bottom: 1px solid #ffd700;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-text {
+            color: #87ceeb;
+            font-size: 0.95rem;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #ffd700, #ff6b00);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-warning:hover {
+            background: linear-gradient(45deg, #ff6b00, #ffd700);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+        
+        .empty-state {
+            background: rgba(0, 0, 30, 0.8);
+            border: 2px dashed #ffd700;
+            border-radius: 10px;
+            padding: 3rem;
+            text-align: center;
+        }
+        
+        .empty-state h3 {
+            color: #ff6b00;
+            margin-bottom: 1rem;
+        }
+        
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Анимированные звёзды на фоне -->
+    <div class="stars-bg" id="starsBg"></div>
+    
+    <!-- Шапка -->
+    <header class="star-wars-header">
+        <div class="container">
+            <h1 class="main-title">🚀 ЗВЁЗДНЫЙ ФЛОТ</h1>
+            <p class="subtitle">Архив кораблей Галактической Империи и Альянса Повстанцев</p>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container my-5">
+        <div class="row">
+            {% for starship in starships %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="starship-card card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ starship.name }}</h5>
+                        <p class="card-text">
+                            <strong>📋 Модель:</strong> {{ starship.model }}<br>
+                            <strong>🏷️ Класс:</strong> {{ starship.starship_class }}<br>
+                            <strong>🏭 Производитель:</strong> {{ starship.manufacturer }}<br>
+                            <strong>👥 Экипаж:</strong> {{ starship.crew }}
+                        </p>
+                        <a href="{% url 'starship_detail' starship.id %}" class="btn btn-warning w-100">
+                            📊 Технические характеристики
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <h3>⚡ ТРЕВОГА! ⚡</h3>
+                    <p class="lead">Голокрон не обнаружил данных о кораблях</p>
+                    <p>Возможно, произошла помеха в гиперпространственной связи...</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script>
+        // Создание анимированных звёзд на фоне
+        function createStars() {
+            const starsBg = document.getElementById('starsBg');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 5 + 's';
+                starsBg.appendChild(star);
+            }
+        }
+        
+        createStars();
+    </script>
+</body>
+</html>
